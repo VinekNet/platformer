@@ -1,4 +1,4 @@
-class Tableau00 extends Tableau{
+class Tableau00a extends Tableau{
 
     preload() {
         super.preload();
@@ -6,7 +6,6 @@ class Tableau00 extends Tableau{
     }
     create() {
         super.create();
-
         //des étoiles
         this.star1=this.physics.add.sprite(200,100,"star");
         this.star1.setCollideWorldBounds(true);

@@ -2,7 +2,7 @@ class Tableau05 extends Tableau04{
 
     preload() {
         super.preload();
-        this.load.image('sky-2', 'assets/sky-2.jpg');
+        this.load.image('sky-3', 'assets/sky-3.jpg');
 
     }
     create() {
@@ -14,15 +14,14 @@ class Tableau05 extends Tableau04{
             0,
             this.sys.canvas.width,
             this.sys.canvas.height,
-            'sky-2'
+            'sky-3'
         );
         this.sky.setOrigin(0,0);
         //fait passer les éléments devant le ciel
         this.platforms.setDepth(10)
         this.stars.setDepth(10)
         this.player.setDepth(10)
-
-
+        
 
         //modifie les plateformes
         this.platforms.children.iterate(function (child) {
@@ -48,6 +47,8 @@ class Tableau05 extends Tableau04{
     update(){
         super.update();
         this.sky.tilePositionX++;
+        //le désert qui pousse
+        //this.player.setVelocityX(VelocityX*0.5);
     }
 
 }
