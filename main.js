@@ -15,7 +15,7 @@ let config = {
     },
     scene: [
         new Ui(),
-        new Tableau02("WAOU"),
+        new Tableau05("Desert"),
         new Tableau00a("[Insérez nom de map]"),
         new Tableau00("Des étoiles"),
         new Tableau01("Des plateformes"),

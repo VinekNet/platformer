@@ -10,7 +10,7 @@ class Tableau02 extends Tableau{
 
         //un groupe d'étoiles
         this.stars=this.physics.add.group();
-        for (let i=0;i<500;i++){
+        for (let i=0;i<1000;i++){
           
             this.stars.create(i,0,"star")
             .setCollideWorldBounds(true)

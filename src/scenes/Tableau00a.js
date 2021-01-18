@@ -6,7 +6,6 @@ class Tableau00a extends Tableau{
     }
     create() {
         super.create();
-
         //des étoiles
         this.star1=this.physics.add.sprite(200,100,"star");
         this.star1.setCollideWorldBounds(true);
