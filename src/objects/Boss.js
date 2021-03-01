@@ -21,17 +21,17 @@ class Boss extends ObjetEnnemi{
 
         // X
         this.originalX=x;
-        this.minX=x-200;
-        this.maxX=x+200;
+        this.minX=x-150;
+        this.maxX=x+25;
 
         // Y
         this.originalY=y;
-        this.minY=height-64;
+        this.minY=height-128;
         this.maxY=height-64;
 
         // on applique les propriété du début de l'animation
         this.x=this.minX;
-        this.y=this.minY;
+        this.y=this.maxY;
         this.alpha=0;
         let me=this;
         this.setCollideWorldBounds(true);
@@ -48,6 +48,7 @@ class Boss extends ObjetEnnemi{
                 },
                 onComplete: function () {
                     me.start();
+
                 }
             })
 
@@ -57,18 +58,28 @@ class Boss extends ObjetEnnemi{
         this.scene.tweens.add({
             targets: this,
             x: {
+                delay: 2000,
                 from: this.minX,
                 to:this.maxX,
-                duration:100,
+                duration:1000,
                 
+                yoyo:-1,
+                hold:500,
+                repeat:-1,
+                repeatDelay:500,
             },
             y: {
-                from: this.minY,
-                to:this.maxY,
+                delay:2000,
+                from: this.maxY,
+                to:this.minY,
                 duration: 500,
+                yoyo:-1,
+                repeat:-1,
+               
                 
             }
         });
+        
     }
 
-}
+} //////
