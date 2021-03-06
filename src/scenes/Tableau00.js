@@ -1,8 +1,7 @@
 class Tableau00 extends Tableau{
-
     preload() {
         super.preload();
-        this.load.image('star', 'assets/star2.png');
+        this.load.image('star', 'assets/pokeballl.png');
     }
     create() {
         super.create();
@@ -26,6 +25,4 @@ class Tableau00 extends Tableau{
         this.physics.add.overlap(this.player, this.star3, this.ramasserEtoile, null, this);
 
     }
-
 }
-

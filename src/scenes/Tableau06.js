@@ -2,9 +2,8 @@ class Tableau06 extends Tableau{
 
     preload() {
         super.preload();
-        this.load.image('star', 'assets/star.png');
-        this.load.image('monster-violet', 'assets/monster-violet.png');
-
+        this.load.image('star', 'assets/pokeballl.png');
+        this.load.image('monster-violet', 'assets/pika2.png');
     }
     create() {
         super.create();

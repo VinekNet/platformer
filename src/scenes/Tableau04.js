@@ -23,7 +23,7 @@ class Tableau04 extends Tableau{
             child.setCollideWorldBounds(true);
             child.setBounce(1);
             child.setImmovable(true)
-            //child.setMaxVelocity(0,500);
+            child.setMaxVelocity(0,500);
         });
         this.stars.children.iterate(function (child) {
             child.setCollideWorldBounds(true);

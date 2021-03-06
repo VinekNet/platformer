@@ -15,16 +15,21 @@ class Tableau extends Phaser.Scene{
      * Par défaut on charge un fond et le player
      */
     preload(){
-        this.load.image('sky', 'assets/fond.png');
+        this.load.image('sky', 'assets/BackSky.png');
         this.load.image('spike', 'assets/spike.png');
+        this.load.image('boom', 'assets/Boom.png');
+        this.load.audio('mobDeath', 'assets/cri.ogg');
+        this.load.audio('getItem', 'assets/poire.ogg');
         this.load.spritesheet('player',
-            'assets/player.png',
+            'assets/player2.png',
             { frameWidth: 32, frameHeight: 48  }
         );
     }
     create(){
         Tableau.current=this;
         this.sys.scene.scale.lockOrientation("landscape")
+        this.sound.add('mobDeath');
+        this.sound.add('getItem');
         console.log("On est sur "+this.constructor.name+" / "+this.scene.key);
         /**
          * Le ciel en fond
@@ -37,8 +42,11 @@ class Tableau extends Phaser.Scene{
          * Le joueur
          * @type {Player}
          */
-        this.player=new Player(this,0,500);
-
+        this.player=new Player(this,0,0);
+        this.boom=this.add.sprite(this.sys.canvas.width/2,this.sys.canvas.height/2,"boom")
+        this.boom.displayWidth=64;
+        this.boom.displayHeight=64;
+        this.boom.visible=false;
     }
     update(){
         super.update();
@@ -56,6 +64,7 @@ class Tableau extends Phaser.Scene{
             if(child.texture && child.texture.key==="star"){
                 if(child.active){
                     totalActive++;
+                    this.sound.play('getItem', {volume : 0.2});
                 }
             }
         }
@@ -84,8 +93,86 @@ class Tableau extends Phaser.Scene{
         this.scene.restart();
 
     }
+    saigne(object,onComplete){
+        let me=this;
+        me.boom.visible=true;
+        me.boom.rotation = Phaser.Math.Between(0,6);
+        me.boom.x=object.x;
+        me.boom.y=object.y;
+        me.tweens.add({
+            targets:me.boom,
+            duration:200,
+            displayHeight:{
+                from:40,
+                to:70,
+            },
+            displayWidth:{
+                from:40,
+                to:70,
+            },
+            onComplete: function () {
+                me.boom.visible=false;
+                onComplete();
+            }
+        })
+    }
 
     /**
+
+     * Quand on touche un monstre
+     * si on le touche par en haut on le tue, sinon c'est lui qui nous tue
+     * @param {Player} player
+     * @param {Phaser.Physics.Arcade.Sprite} monster
+     */
+    hitMonster(player, monster){
+        let me=this;
+        if(monster.isDead !== true){ //si notre monstre n'est pas déjà mort
+            if(
+                // si le player descend
+                player.body.velocity.y > 0
+                // et si le bas du player est plus haut que le monstre
+                && player.getBounds().bottom < monster.getBounds().top+30
+
+            ){
+                ui.gagne();
+                monster.isDead=true; //ok le monstre est mort
+                monster.visible=false;
+                this.sound.play('mobDeath');
+                this.saigne(monster,function(){
+                    //à la fin de la petite anim...ben il se passe rien :)
+                })
+                //notre joueur rebondit sur le monstre
+                player.directionY=500;
+            }else{
+                //le joueur est mort
+                if(!me.player.isDead){
+                    me.player.isDead=true;
+                    me.player.visible=false;
+                    //ça saigne...
+                    me.saigne(me.player,function(){
+                        //à la fin de la petite anim, on relance le jeu
+                        me.boom.visible=false;
+                        me.player.anims.play('turn');
+                        me.player.isDead=false;
+                        me.scene.restart();
+                    })
+
+                }
+
+
+            }
+        }
+
+    }
+
+
+    /**
+=======
+>>>>>>> parent of 90a774d (son in game)
+=======
+>>>>>>> parent of 90a774d (son in game)
+=======
+>>>>>>> parent of 90a774d (son in game)
      * Pour reset cette scène proprement
      * @private
      */
