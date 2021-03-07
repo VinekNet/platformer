@@ -17,6 +17,11 @@ class Tableau extends Phaser.Scene{
     preload(){
         this.load.image('sky', 'assets/fond.png');
         this.load.image('spike', 'assets/spike.png');
+        this.load.image('boom', 'assets/kaboom.png');
+        this.load.audio('zik', 'assets/wacky.wav');
+        this.load.audio('ded', 'assets/clunk.wav');
+        this.load.audio('kill', 'assets/flesh.wav');
+        this.load.audio('pick', 'assets/coin.wav');
         this.load.spritesheet('player',
             'assets/player.png',
             { frameWidth: 32, frameHeight: 48  }
@@ -25,6 +30,11 @@ class Tableau extends Phaser.Scene{
     create(){
         Tableau.current=this;
         this.sys.scene.scale.lockOrientation("landscape")
+        this.sound.add('ded');
+        this.sound.add('kill');
+        this.sound.add('pick');
+        this.mood = this.sound.add('zik')
+        this.mood.play();
         console.log("On est sur "+this.constructor.name+" / "+this.scene.key);
         /**
          * Le ciel en fond
@@ -39,14 +49,51 @@ class Tableau extends Phaser.Scene{
          */
         this.player=new Player(this,0,500);
 
+        this.boom=this.add.sprite(this.sys.canvas.width/2,this.sys.canvas.height/2,"boom")
+        this.boom.displayWidth=64;
+        this.boom.displayHeight=64;
+        this.boom.visible=false;
+        this.boom.setDepth(1000);  
+        
+        
     }
     update(){
         super.update();
         this.player.move();
     }
 
+    /**
+     *
+     * @param {Sprite} object Objet qui saigne
+     * @param {function} onComplete Fonction à appeler quand l'anim est finie
+     */
+    saigne(object,onComplete){
+        let me=this;
+        me.boom.visible=true;
+        me.boom.rotation = Phaser.Math.Between(0,6);
+        me.boom.x=object.x;
+        me.boom.y=object.y;
+        me.tweens.add({
+            targets:me.boom,
+            duration:200,
+            displayHeight:{
+                from:40,
+                to:70,
+            },
+            displayWidth:{
+                from:40,
+                to:70,
+            },
+            onComplete: function () {
+                me.boom.visible=false;
+                onComplete();
+            }
+        })
+    }
+
     ramasserEtoile (player, star)
     {
+        this.sound.play('pick');
         star.disableBody(true, true);
         ui.gagne();
 
@@ -84,7 +131,55 @@ class Tableau extends Phaser.Scene{
         this.scene.restart();
 
     }
+    /**
+     * Quand on touche un monstre
+     * si on le touche par en haut on le tue, sinon c'est lui qui nous tue
+     * @param {Player} player
+     * @param {Phaser.Physics.Arcade.Sprite} monster
+     */
+     hitMonster(player, monster){
+        let me=this;
+        if(monster.isDead !== true){ //si notre monstre n'est pas déjà mort
+            if(
+                // si le player descend
+                player.body.velocity.y > 0
+                // et si le bas du player est plus haut que le monstre
+                && player.getBounds().bottom < monster.getBounds().top+30
 
+            ){
+                ui.gagne();
+                this.sound.play('kill');
+                monster.isDead=true; //ok le monstre est mort
+                monster.visible=false;
+                this.saigne(monster,function(){
+                    //à la fin de la petite anim...ben il se passe rien :)
+                })
+                //notre joueur rebondit sur le monstre
+                player.directionY=500;
+            }else{
+                //le joueur est mort
+                if(!me.player.isDead){
+                    me.player.isDead=true;
+                    me.player.visible=false;
+                    this.mood.stop();
+                    this.sound.play('ded');
+                    //ça saigne...
+                    me.saigne(me.player,function(){
+                        //à la fin de la petite anim, on relance le jeu
+                        me.boom.visible=false;
+                        me.player.anims.play('turn');
+                        me.player.isDead=false;
+                        me.scene.restart();
+                    })
+
+                }
+
+
+            }
+        }
+
+    }
+        
     /**
      * Pour reset cette scène proprement
      * @private
@@ -98,6 +193,7 @@ class Tableau extends Phaser.Scene{
      * Quand on a gagné
      */
     win(){
+        this.mood.stop();
         Tableau.suivant();
     }
 
