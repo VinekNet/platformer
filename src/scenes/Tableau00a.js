@@ -1,12 +1,11 @@
-class Tableau00A extends Tableau{
+class Tableau00a extends Tableau{
 
     preload() {
         super.preload();
-        this.load.image('star', 'assets/star.png');
+        this.load.image('star', 'assets/star2.png');
     }
     create() {
         super.create();
-
         //des étoiles
         this.star1=this.physics.add.sprite(200,100,"star");
         this.star1.setCollideWorldBounds(true);

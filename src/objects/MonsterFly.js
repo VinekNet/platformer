@@ -1,4 +1,4 @@
-class Fly extends ObjetEnnemi{
+class MonsterFly extends ObjetEnnemi{
     /**
      *
      * @param {Tableau} scene
@@ -11,7 +11,7 @@ class Fly extends ObjetEnnemi{
         this.body.allowGravity=false;
 
         //gestion de la taille
-        this.setDisplaySize(100,100);
+        this.setDisplaySize(64,64);
 
         //on réduit un peu la zone de hit
         this.setBodySize(this.body.width-400,this.body.height-400);

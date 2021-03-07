@@ -15,20 +15,22 @@ let config = {
     },
     scene: [
         new Ui(),
-        new Tableau08("C'est beau hein ?"),
-        new TableauZoo("Le zoo ! (Chrysacier va pas tarder)"),
-        new Tableau06("Un Dracaufeu sauvage, attention !"),
-        new Tableau05("Extend un tableau noir"),
-        
-        new Tableau00A("Toto"),
-        new Tableau01("Des formes plates"),
-        new Tableau02("Plein de toilettes"),
-        new Tableau03("Des bouge qui platforment"),
-        new Tableau04("Jouer de la musique avec les groupes de musique"),
-       
-        
-        new Tableau07("Un monstre du doigx volant du doigx!"),
-        
+        new TableauLevel("Niveau Scroll"),
+        new TableauBoss("Boss"),
+        new Tableau00b("Zoo"),
+        new Tableau05("Desert"),
+        new Tableau06("Un monstre!"),
+        new Tableau00a("[Insérez nom de map]"),
+        new Tableau00("Des étoiles"),
+        new Tableau01("Des plateformes"),
+        new Tableau02("Plein d'étoiles"),
+        new Tableau03("Des plateformes qui bougent"),
+        new Tableau04("Jouer avec les groupes"),
+        new Tableau05("Extend un tableau"),
+        new Tableau06("Un monstre!"),
+        new Tableau07("Un monstre volant!"),
+        new Tableau08("Un plateau qui sort du cadre"),
+
     ],
     width: width,
     height: height,
