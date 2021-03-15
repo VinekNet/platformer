@@ -16,6 +16,7 @@ let config = {
     scene: [
         new Ui(),
         new TableauLevel("Niveau Scroll"),
+        new Map100("LvlTiled"),
         //new TableauBoss("Boss"),
         //new Tableau00b("Zoo"),
         //new Tableau05("Desert"),
