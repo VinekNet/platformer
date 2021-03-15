@@ -47,7 +47,7 @@ class Tableau extends Phaser.Scene{
          * Le joueur
          * @type {Player}
          */
-        this.player=new Player(this,0,500);
+        this.player=new Player(this,128,0);
 
         this.boom=this.add.sprite(this.sys.canvas.width/2,this.sys.canvas.height/2,"boom")
         this.boom.displayWidth=64;

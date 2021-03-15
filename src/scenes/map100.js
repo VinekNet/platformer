@@ -12,7 +12,8 @@ class Map100 extends Tableau{
     backgroundImage.setScale(2, 0.8);
     const map = this.make.tilemap({ key: 'map' });
     const tileset = map.addTilesetImage('tableauTiledTileset', 'tiles');
-    const platforms = map.createStaticLayer('Platforms', tileset, 0, 200);  
+    const levelbase= map.createLayer('levelbase',this.tileset,0,0);
+    //const platforms = map.createStaticLayer('Platforms', tileset, 0, 200);  
     //platforms.setCollisionByExclusion(-1, true);
 
 }
