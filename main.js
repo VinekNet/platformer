@@ -15,8 +15,8 @@ let config = {
     },
     scene: [
         new Ui(),
-        new TableauTiledFou("LvlTiled de fou malade sa mere"),
         new TableauLevel("Niveau Scroll"),
+        new TableauTiledFou("LvlTiled de fou malade sa mere"),
         new Map100("LvlTiled"),
         //new TableauBoss("Boss"),
         //new Tableau00b("Zoo"),
