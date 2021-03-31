@@ -14,7 +14,7 @@ let config = {
         }
     },
     scene: [
-        new Ui(),
+        //new Ui(),
         new TableauLevel("Niveau Scroll"),
         new TableauTiledFou("LvlTiled de fou malade sa mere"),
         new Map100("LvlTiled"),
